@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pisteando</title>
+    <link rel="stylesheet" href="./css/estilos.css" />
+    <link rel="icon" type="image/x-icon" href="./assets/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#"><img src="./assets/logoNav.png" alt="logo" /></a>
+        <ul id="ul-header">
+          <li><a class="link" href="#nosotros">Nosotros</a></li>
+          <li><a class="link" href="./anuncios.html">Anuncios</a></li>
+          <li><a class="link" href="#blog">Blog</a></li>
+          <li><a class="link" href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div id="cabecera">
+        <h1>Administracion</h1>
+        <img src="./assets/banner.png" alt="banner-autos" id="banner" />
+      </div>
+    </header>
+
+    <div id="divForm">
+      <fieldset>
+        <legend>Infomacion Del Anuncio</legend>
+        <form id="form" >
+          <fieldset class="form-seccion">
+            <label for="txtTitulo">Titulo</label><br />
+            <input  type="text"  name="txtTitulo"  id="txtTitulo"  placeholder="Titulo"/>
+            <small></small>
+          </fieldset>
+
+          <fieldset class="form-seccion form-radio">
+            <label for="chTransaccion">Transaccion:</label><br />
+            <label for="chVenta">Venta:</label>
+            <input type="radio"  id="chVenta" name="chTransaccion" value="venta" checked />
+            <label for="chAlquiler" >Alquiler:</label>
+            <input type="radio"  id="chAlquiler"name="chTransaccion" value="alquiler" />
+          </fieldset>
+
+          <fieldset class="form-seccion">
+            <label for="txtDescripcion">Descripcion</label> <br />
+            <input type="text" name="txtDescripcion" id="txtDescripcion" placeholder="Descripción"/>
+            <small></small>
+          </fieldset>
+
+          <fieldset class="form-seccion">
+            <label for="txtPrecio">Precio</label> <br />
+            <input
+              type="text"
+              name="txtPrecio"
+              id="txtPrecio"
+              placeholder="Precio"  class="number"
+            />
+            <small></small>
+          </fieldset>
+
+          <fieldset class="form-seccion final-seccion">
+              <div>
+
+                <img src="./assets/puertas.jpg" alt="puertas" />
+                <input  type="text"  name="txtPuertas"  id="txtPuertas"  placeholder="Puertas" class="number"/>
+                <small></small>
+              </div>
+              <div>
+
+                <img src="./assets/km.JPG" alt="velocimetros" />
+                <input type="text" name="txtKMs" id="txtKMs" placeholder="KMs"  class="number"/>
+                <small></small>
+              </div>
+            <div>
+
+              <img src="./assets/potencia.jpg" alt="potencia" />
+              <input  type="text"  name="txtPotencia"  id="txtPotencia"  placeholder="Potencia" class="number"/>
+              <small></small>
+            </div>
+          </fieldset>
+          <small id="mensaje-form"></small>
+          <button  value="Guardar" id="btnGuardar">Guardar</button>
+          <button  value="modificar" id="btnModificar" disabled> Modificar</button>
+          <button  value="eliminar" id="btnEliminar" disabled> Eliminar </button>
+          
+        </form>
+      </fieldset>
+    </div>
+    
+    
+    <div id="spinner-container">
+      <img src="./assets/rueda.png" alt="rueda-spinner" id="spinner" class="rotate notVisible"/>
+
+    </div>
+    <div id="divTabla" >
+
+
+    </div>
+
+    <footer>
+      <nav>
+        <ul>
+          <li><a class="link" href="#nosotros">Nosotros</a></li>
+          <li><a class="link" href="#anuncios">Anuncios</a></li>
+          <li><a class="link" href="#blog">Blog</a></li>
+          <li><a class="link" href="#contacto">Contacto</a></li>
+        </ul>
+        <p>Todos los derechos reservados 2022 &copy;</p>
+      </nav>
+    </footer>
+
+    <script src="./js/index.js" type="module"></script>
+  </body>
+</html>
