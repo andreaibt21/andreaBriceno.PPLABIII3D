@@ -2,10 +2,18 @@ import { Anuncio } from "./Anuncio.js";
 import { crearTabla } from "./tablaDinamica.js";
 // import { anuncios, guardarEnLocalStorage, agregarAnuncio } from "./storage.js";
 import Anuncio_Auto from "./Anuncio_Auto.js";
-import { validarCampoVacio, validarNumero } from "./validaciones.js";
+import {
+  validarCampoVacio,
+  validarRango,
+  validarPuertas,
+  validarTexto,
+} from "./validaciones.js";
 
 const formulario = document.forms[0];
 const controles = formulario.elements;
+
+// console.log(controles);
+
 const {
   txtTitulo,
   txtDescripcion,
@@ -14,15 +22,16 @@ const {
   txtKMs,
   txtPotencia,
   chTransaccion,
+  chLowrider,
+  chFlamas,
+  chAleron,
 } = formulario;
-
 const small = document.getElementById("mensaje-form");
 const btnGuardar = document.getElementById("btnGuardar");
 const btnEliminar = document.getElementById("btnEliminar");
 const btnModificar = document.getElementById("btnModificar");
 let cantidadInputVacios = 0;
 let idSelecionado;
-
 
 const listaAnuncios = localStorage.getItem("anuncios")
   ? JSON.parse(localStorage.getItem("anuncios"))
@@ -39,19 +48,20 @@ for (let i = 0; i < controles.length; i++) {
   const control = controles.item(i);
 
   if (control.matches("input")) {
+    control.addEventListener("blur", validarCampoVacio);
     if (control.matches("[type=text]")) {
-      control.addEventListener("blur", validarCampoVacio);
-      if (control.classList.contains("number")) {
-        control.addEventListener("blur", validarNumero);
-      }
-    } else if (control.matches("[type=file]")) {
-      control.addEventListener("change", validarExtencion);
+      control.addEventListener("blur", validarTexto);
+    } else if (control.matches("[id=txtKMs]")) {
+      control.addEventListener("blur", (e) => validarRango(e, 0, 200000));
+    } else if (control.matches("[id=txtPotencia]")) {
+      control.addEventListener("blur", (e) => validarRango(e, 50, 300));
     }
   }
 }
 
 window.addEventListener("submit", (e) => {
-  e.preventDefault();});
+  e.preventDefault();
+});
 
 // CREAR ANUNCIO
 btnGuardar.addEventListener("click", (e) => {
@@ -74,6 +84,11 @@ btnGuardar.addEventListener("click", (e) => {
     const km = txtKMs.value;
     const potencia = txtPotencia.value;
     const transaccion = chTransaccion.value;
+
+    const lowrider = checkSiNo(chLowrider.checked);
+    const flamas = checkSiNo(chFlamas.checked);
+    const aleron = checkSiNo(chAleron.checked);
+
     let nuevoAnuncio = new Anuncio_Auto(
       Date.now(),
       titulo,
@@ -82,11 +97,14 @@ btnGuardar.addEventListener("click", (e) => {
       precio,
       puertas,
       km,
-      potencia
+      potencia,
+      lowrider,
+      flamas,
+      aleron
     );
-    simularCarga(nuevoAnuncio);
     small.classList.remove("danger", "smallError");
     small.textContent = "";
+    simularCarga(nuevoAnuncio, "Guardando");
   } else {
     small.textContent = "Error, intente nuevamente";
     small.classList.add("danger", "smallError");
@@ -94,9 +112,41 @@ btnGuardar.addEventListener("click", (e) => {
   }
 });
 
-const divTabla = document.getElementById("divTabla");
 
+btnModificar.addEventListener("click", () => {
+  modificarAnuncio(idSelecionado);
+});
+
+btnEliminar.addEventListener("click", () => {
+  console.log(idSelecionado);
+  eliminarAnuncio(idSelecionado);
+});
+
+
+const divTabla = document.getElementById("divTabla");
 divTabla.appendChild(crearTabla(listaAnuncios));
+const tabla = document.getElementById("divTabla");
+
+tabla.addEventListener("click", (e) => {
+  const emisor = e.target;
+  if (emisor.matches("tbody tr td")) {
+    idSelecionado = emisor.parentElement.id;
+    const anuncio = listaAnuncios.find(
+      (element) => element.id == idSelecionado
+    );
+
+    completarForm(anuncio);
+
+    const btnGuardar = document.getElementById("btnGuardar");
+    const btnEliminar = document.getElementById("btnEliminar");
+    const btnModificar = document.getElementById("btnModificar");
+    small.textContent = "";
+    btnGuardar.classList.add("notVisible");
+    btnEliminar.classList.remove("notVisible");
+    btnModificar.classList.remove("notVisible");
+  }
+});
+
 
 function agregarAnuncio(auxAnuncio) {
   listaAnuncios.push(auxAnuncio);
@@ -105,19 +155,31 @@ function agregarAnuncio(auxAnuncio) {
   limpiarInputs();
 }
 
-function simularCarga(auxAnuncio) {
-  const spinner = document.getElementById("spinner");
-  spinner.classList.add("visible");
-  spinner.classList.remove("notVisible");
+const mensaje = (texto, remove) => {
+  const small = document.getElementById("mensaje-form");
+  small.textContent = texto;
+  small.classList.add("mensaje");
+  if(remove){
+  small.classList.remove("mensaje");
 
+  }
+}
+
+
+function simularCarga(auxAnuncio, texto) {
+  const divSpinner = document.getElementById("spinner-container");
+
+  setSpinner(divSpinner, "./assets/preloader.gif");
+  mensaje(texto)
   setTimeout(() => {
-    console.log("listo");
-    spinner.classList.remove("visible");
-    spinner.classList.add("notVisible");
-
-    agregarAnuncio(auxAnuncio);
+    if(texto =="Guardando"){
+      agregarAnuncio(auxAnuncio);
+    }
+    clearSpinner(divSpinner);
+    mensaje("", true)
   }, 3000);
 }
+
 
 function actualizarTabla(lista) {
   const divTabla = document.getElementById("divTabla");
@@ -131,6 +193,7 @@ function actualizarTabla(lista) {
   }
 }
 
+
 function limpiarInputs() {
   const {
     txtTitulo,
@@ -139,6 +202,10 @@ function limpiarInputs() {
     txtPuertas,
     txtKMs,
     txtPotencia,
+    chVenta,
+    chLowrider,
+    chFlamas,
+    chAleron,
   } = controles;
 
   txtTitulo.value = "";
@@ -147,6 +214,10 @@ function limpiarInputs() {
   txtPuertas.value = "";
   txtKMs.value = "";
   txtPotencia.value = "";
+  chVenta.checked = true;
+  chLowrider.checked = false;
+  chFlamas.checked = false;
+  chAleron.checked = false;
   txtTitulo.classList.remove("inputOk");
   txtDescripcion.classList.remove("inputOk");
   txtPrecio.classList.remove("inputOk");
@@ -155,26 +226,6 @@ function limpiarInputs() {
   txtPotencia.classList.remove("inputOk");
 }
 
-const tabla = document.getElementById("divTabla");
-tabla.addEventListener("click", (e) => {
-  const emisor = e.target;
-  if (emisor.matches("tbody tr td")) {
-   idSelecionado = emisor.parentElement.id;
-    const anuncio = listaAnuncios.find(
-      (element) => element.id == idSelecionado
-    );
-  
-    completarForm(anuncio);
-
-    const btnGuardar = document.getElementById("btnGuardar");
-    const btnEliminar = document.getElementById("btnEliminar");
-    const btnModificar = document.getElementById("btnModificar");
-
-    btnGuardar.setAttribute("disabled", "");
-    btnEliminar.removeAttribute("disabled");
-    btnModificar.removeAttribute("disabled");
-  }
-});
 
 function completarForm(anuncio) {
   const {
@@ -184,7 +235,9 @@ function completarForm(anuncio) {
     txtPuertas,
     txtKMs,
     txtPotencia,
-    chTransaccion,
+    chLowrider,
+    chFlamas,
+    chAleron,
   } = controles;
   if (anuncio.transaccion === "venta") {
     chVenta.checked = true;
@@ -197,6 +250,17 @@ function completarForm(anuncio) {
   txtPuertas.value = anuncio.puertas;
   txtKMs.value = anuncio.kilometraje;
   txtPotencia.value = anuncio.potencia;
+  anuncio.lowrider == "si"
+    ? (chLowrider.checked = true)
+    : (chLowrider.checked = false);
+  anuncio.flamas == "si"
+    ? (chFlamas.checked = true)
+    : (chFlamas.checked = false);
+  anuncio.aleron == "si"
+    ? (chAleron.checked = true)
+    : (chAleron.checked = false);
+
+  // console.log(anuncio)
   txtTitulo.classList.add("inputOk");
   txtDescripcion.classList.add("inputOk");
   txtPrecio.classList.add("inputOk");
@@ -207,7 +271,6 @@ function completarForm(anuncio) {
 
 function modificarAnuncio(id) {
   const listaAux = listaAnuncios.filter((element) => element.id !== Number(id));
-
   const titulo = txtTitulo.value;
   const descripcion = txtDescripcion.value;
   const precio = txtPrecio.value;
@@ -215,41 +278,69 @@ function modificarAnuncio(id) {
   const km = txtKMs.value;
   const potencia = txtPotencia.value;
   const transaccion = chTransaccion.value;
+  const lowrider = chLowrider.checked ? "si" : "no";
+  const flamas = chFlamas.checked ? "si" : "no";
+  const aleron = chAleron.checked ? "si" : "no";
 
-  const anuncioAux = new Anuncio_Auto( id, titulo, transaccion, descripcion, precio, puertas, km, potencia);
+  const anuncioAux = new Anuncio_Auto(
+    id,
+    titulo,
+    transaccion,
+    descripcion,
+    precio,
+    puertas,
+    km,
+    potencia,
+    lowrider,
+    flamas,
+    aleron
+  );
 
   console.log(anuncioAux);
   listaAux.push(anuncioAux);
   localStorage.setItem("anuncios", JSON.stringify(listaAux));
+  simularCarga(false, "Modificando anuncio");
   limpiarInputs();
   actualizarTabla(listaAux);
-  btnGuardar.removeAttribute("disabled");
-  btnEliminar.setAttribute("disabled", "");
-  btnModificar.setAttribute("disabled", "");
+  btnGuardar.classList.remove("notVisible");
+  btnEliminar.classList.add("notVisible");
+  btnModificar.classList.add("notVisible");
 }
-
 
 function eliminarAnuncio(id) {
   const listaAux = listaAnuncios.filter((element) => element.id !== Number(id));
-  console.log( listaAux);
+  console.log(listaAux);
   localStorage.setItem("anuncios", JSON.stringify(listaAux));
-  actualizarTabla(listaAux);
+  simularCarga(false, "Elimininando Anuncio");
   limpiarInputs();
-  btnGuardar.removeAttribute("disabled");
-  btnEliminar.setAttribute("disabled", "");
-  btnModificar.setAttribute("disabled", "");
+  actualizarTabla(listaAux);
+  btnGuardar.classList.remove("notVisible");
+  btnEliminar.classList.add("notVisible");
+  btnModificar.classList.add("notVisible");
 }
 
 
 
+const setSpinner = (div, src) => {
+  const img = document.createElement("img");
+  img.setAttribute("src", src);
+  img.setAttribute("alt", "spinner");
+  div.appendChild(img);
+};
 
-btnModificar.addEventListener("click", () => {
-    modificarAnuncio(idSelecionado);
-});
+const clearSpinner = (div) => {
 
-btnEliminar.addEventListener("click", () => {
-  console.log(idSelecionado);
-  eliminarAnuncio(idSelecionado);
-});
+  while (div.hasChildNodes()) {
+    div.removeChild(div.firstChild);
+  }
+};
+
+const checkSiNo = (checbox) => {
+  if (checbox) {
+    return "si";
+  } else {
+    return "no";
+  }
+};
 
 

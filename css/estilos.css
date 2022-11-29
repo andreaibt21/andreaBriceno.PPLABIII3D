@@ -5,6 +5,19 @@ html {
 body {
   margin: 0;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 255, 106);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
 nav {
   background-color: rgb(133, 177, 162);
   margin: 0;
@@ -24,10 +37,10 @@ nav ul {
   align-items: center;
 }
 
-#ul-header{
+#ul-header {
   flex-direction: column;
   align-items: flex-end;
-  justify-content:center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 li {
@@ -39,9 +52,9 @@ li {
   width: 100px;
   list-style-type: none;
 }
-#ul-header li{
+#ul-header li {
   flex-direction: column;
-  height:15px;
+  height: 15px;
   padding: 10px;
   margin-right: 70px;
 }
@@ -72,6 +85,12 @@ li {
   display: flex;
   justify-content: center;
 }
+#form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 #form fieldset {
   width: 50vw;
 }
@@ -81,15 +100,20 @@ li {
   border: none;
 }
 
-input {
+input,
+select {
   background-color: lightgray;
   border: 0;
   border-radius: 10px;
   padding: 5px;
 }
+select {
+  width: 80%;
+  display: block;
+}
 
 .form-seccion input {
-  width: 95%;
+  width: 100%;
 }
 .form-radio input {
   width: 5%;
@@ -97,15 +121,72 @@ input {
 .final-seccion {
   display: flex;
 }
-
+.final-seccion div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 small {
   display: block;
 }
 
 .final-seccion img {
   width: 20px;
+  padding: 10px;
 }
 
+.inputError {
+  border: 1px solid red;
+  box-shadow: 0 0 5px red;
+}
+
+.inputOk {
+  border: 1px solid green;
+  box-shadow: 0 0 5px green;
+}
+small {
+  display: block;
+}
+
+.danger {
+  color: red;
+  font-weight: bold;
+}
+.smallError {
+  font-size: 20px;
+}
+#checkboxes {
+  display: flex;
+  justify-content: space-evenly;
+}
+#checkboxes div{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+
+.mensaje{
+  position: absolute;
+  font-size: 50px;
+  font-weight: bold;
+  color: green;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  margin: 10px;
+  top: 60%;
+  left: 30%;
+  background-color:rgb(133, 177, 162) ;
+  box-shadow: 10px 10px 10px rgb(0, 0, 0);
+  text-shadow: 2px 2px 4px #000000;
+  border-radius: 30px;
+  width: 40%;
+  height: 300px;
+  text-align: center;
+}
+
+/* --------------------- footer -------------------- */
 footer {
   background-color: rgb(133, 177, 162);
   width: 100%;
@@ -126,6 +207,146 @@ footer p {
   width: 40%;
   color: white;
 }
+
+
+/* ---------------------------- TABLA -------------------------- */
+#divTabla {
+  margin: 20px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table,
+td,
+th {
+  border: 1px solid black;
+}
+
+td,
+th {
+  padding: 5px;
+}
+thead {
+  background-color: rgb(0, 255, 106);
+}
+table {
+  border-radius: 10px;
+  border-collapse: collapse;
+}
+tbody tr:hover {
+  background-color: rgba(78, 212, 107, 0.534);
+}
+
+#spinner-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rotate {
+  animation: rotation 1s infinite linear;
+}
+#spinner {
+  width: 50px;
+}
+
+.notVisible {
+  display: none;
+}
+.Visible {
+  visibility: visible;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+#bodyIndex {
+  background-image: url("https://img.freepik.com/fotos-premium/muchos-autos-estacionamiento-abierto-enfoque-selectivo_94863-1089.jpg?w=2000");
+  background-color: #cccccc;
+  background-size: auto;
+  background-repeat: no-repeat;
+}
+
+#navIndex {
+  background-color: #adacac6c;
+}
+#navIndex img {
+  height: 100px;
+}
+#navIndex ul {
+  margin: 0;
+}
+#navIndex li {
+  height: 20px;
+  padding: 0;
+}
+
+#spinner-container img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+/* ------------------  ANUNCIOS ------------------ */
+
+#anuncios-container {
+  width: 70vw;
+  background-color: rgb(102, 101, 101);
+  height: 70vh;
+  margin: 0 auto;
+  margin-bottom: 100px;
+  overflow: hidden;
+  overflow-y: scroll;
+  border-radius: 20px;
+}
+
+.card {
+  background-color: lightgray;
+  border-radius: 20px;
+  padding: 20px;
+  width: 65%;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.detalles {
+  display: flex;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  background-color: rgb(102, 101, 101);
+  border-radius: 20px;
+
+  padding: 10px;
+}
+
+button {
+  background-color: rgb(86, 86, 240);
+  padding: 10px;
+  border-radius: 20px;
+  width: 120px;
+  margin-top: 10px;
+}
+#btnGuardar{
+  /* display:flex;
+  align-items: center;
+  justify-content: center; */
+  margin: 0 auto;
+
+}
+
 @media screen and (min-width: 900px) {
   .final-seccion div {
     width: 100%;
@@ -134,8 +355,9 @@ footer p {
   .final-seccion input {
     width: 80%;
   }
-}
-@media screen and (max-width: 900px) {
+} /* fin media query */
+
+@media screen and (max-width: 1200px) {
   .final-seccion {
     flex-direction: column;
     align-items: center;
@@ -154,99 +376,22 @@ footer p {
   .final-seccion img {
     margin: 10px 0;
   }
-}
-
-/* --------------------- form -------------------- */
-.inputError {
-  border: 1px solid red;
-  box-shadow: 0 0 5px red;
-}
-
-.inputOk {
-  border: 1px solid green;
-  box-shadow: 0 0 5px green;
-}
-small {
-  display: block;
-}
-
-.danger {
-  color: red;
-  font-weight: bold;
-}
-.smallError{
-  font-size: 20px
-  
-}
-
-/* ---------------------------- TABLA -------------------------- */
-#divTabla{
-  margin: 20px 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-table, td, th {
-  border: 1px solid black;
-}
-
-td, th {
- padding: 5px;
-}
-thead{
-  background-color: red
-}
-table{
-  border-collapse: collapse;
-}
-tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.185);
-}
-
-#spinner-container{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.rotate {
-  animation: rotation 1s infinite linear;
-}
-#spinner{
-  width: 50px;
-}
-
-.notVisible{
-  display: none;
-}
-.Visible{
-  visibility:visible;
-}
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
+  #banner {
+    display: none;
   }
-  to {
-    transform: rotate(359deg);
+
+  #divTabla {
+    width: 90%;
+    margin: 0 auto;
+
+    padding: 10px;
   }
-}
-
-#bodyIndex {
-  background-image: url("https://img.freepik.com/fotos-premium/muchos-autos-estacionamiento-abierto-enfoque-selectivo_94863-1089.jpg?w=2000");
-  background-color: #cccccc;
-  background-size: auto;
-  background-repeat: no-repeat;
-}
-
-#navIndex{
-  background-color:#cccccc00;
-
-}
-
-
-#bodyIndex footer {
-  position: absolute;
-  bottom: 0;
-
-}
+  table {
+    width: 50%;
+    display: block;
+   
+    overflow: auto;
+    padding: 10px;
+  }
+ 
+} /* fin media query */

@@ -4,6 +4,9 @@ class Anuncio_Auto extends Anuncio {
   puertas;
   kilometraje;
   potencia;
+  lowrider;
+  flamas;
+  aleron;
 
   constructor(
     id,
@@ -13,12 +16,18 @@ class Anuncio_Auto extends Anuncio {
     precio,
     puertas,
     km,
-    potencia
+    potencia,
+    lowrider,
+    flamas,
+    aleron
   ) {
     super(id, titulo, transaccion, descripcion, precio);
     this.Puertas = puertas;
     this.Kilometraje = km;
     this.Potencia = potencia;
+    this.lowrider = lowrider;
+    this.flamas = flamas;
+    this.aleron = aleron;
   }
 
   set Puertas(value) {

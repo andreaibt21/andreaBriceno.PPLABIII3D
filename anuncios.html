@@ -17,7 +17,7 @@
   <body>
     <header>
       <nav>
-        <a href="#"><img src="./assets/logoNav.png" alt="logo" /></a>
+        <a href="index.html"><img src="./assets/logoNav.png" alt="logo" /></a>
         <ul id="ul-header">
           <li><a class="link" href="#nosotros">Nosotros</a></li>
           <li><a class="link" href="./anuncios.html">Anuncios</a></li>
@@ -34,76 +34,152 @@
     <div id="divForm">
       <fieldset>
         <legend>Infomacion Del Anuncio</legend>
-        <form id="form" >
+        <form id="form">
           <fieldset class="form-seccion">
             <label for="txtTitulo">Titulo</label><br />
-            <input  type="text"  name="txtTitulo"  id="txtTitulo"  placeholder="Titulo"/>
+            <input
+              type="text"
+              name="txtTitulo"
+              id="txtTitulo"
+              placeholder="Titulo"
+              
+            />
             <small></small>
           </fieldset>
 
           <fieldset class="form-seccion form-radio">
             <label for="chTransaccion">Transaccion:</label><br />
             <label for="chVenta">Venta:</label>
-            <input type="radio"  id="chVenta" name="chTransaccion" value="venta" checked />
-            <label for="chAlquiler" >Alquiler:</label>
-            <input type="radio"  id="chAlquiler"name="chTransaccion" value="alquiler" />
+            <input
+              type="radio"
+              id="chVenta"
+              name="chTransaccion"
+              value="venta"
+              checked
+            />
+            <label for="chAlquiler">Alquiler:</label>
+            <input
+              type="radio"
+              id="chAlquiler"
+              name="chTransaccion"
+              value="alquiler"
+            />
+          </fieldset>
+
+          <fieldset  id="checkboxes" >
+            <legend>Tunea tu auto</legend>
+            <div>
+
+              <label for="chLowrider"> Lowrider
+                <input type="checkbox" id="chLowrider" name="chLowrider" value="Lowrider" />
+              </label>
+              <img src="./assets/lowride.png" style="width:40px; " alt="" srcset="">
+            </div>
+            <div>
+
+              <label for="chFlamas"> Flamas
+                <input type="checkbox" id="chFlamas" name="chFlamas" value="Flamas" />
+              </label>
+              <img src="./assets/flamas.png" style="width:30px; " alt="" srcset="">
+            </div>
+            <div>
+
+              <label for="chAleron"> Aleron
+                <input type="checkbox" id="chAleron" name="chAleron" value="Aleron" />
+              </label>
+              <img src="./assets/aleron.png" style="width:30px;" alt="" srcset="">
+            </div>
+
           </fieldset>
 
           <fieldset class="form-seccion">
             <label for="txtDescripcion">Descripcion</label> <br />
-            <input type="text" name="txtDescripcion" id="txtDescripcion" placeholder="Descripción"/>
+            <input
+              type="text"
+              name="txtDescripcion"
+              id="txtDescripcion"
+              placeholder="Descripción"
+              
+            />
             <small></small>
           </fieldset>
 
           <fieldset class="form-seccion">
             <label for="txtPrecio">Precio</label> <br />
             <input
-              type="text"
+              type="number"
               name="txtPrecio"
               id="txtPrecio"
-              placeholder="Precio"  class="number"
+              placeholder="Precio"
+              class="number"
+              
             />
-            <small></small>
+            <small ></small>
           </fieldset>
 
           <fieldset class="form-seccion final-seccion">
-              <div>
-
-                <img src="./assets/puertas.jpg" alt="puertas" />
-                <input  type="text"  name="txtPuertas"  id="txtPuertas"  placeholder="Puertas" class="number"/>
-                <small></small>
-              </div>
-              <div>
-
-                <img src="./assets/km.JPG" alt="velocimetros" />
-                <input type="text" name="txtKMs" id="txtKMs" placeholder="KMs"  class="number"/>
-                <small></small>
-              </div>
             <div>
+              <img src="./assets/puertas.png" alt="puertas" />
+              <select name="txtPuertas" id="txtPuertas" >
 
-              <img src="./assets/potencia.jpg" alt="potencia" />
-              <input  type="text"  name="txtPotencia"  id="txtPotencia"  placeholder="Potencia" class="number"/>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <small></small>
+            </div>
+            <div>
+              <img src="./assets/km.png" alt="velocimetros" />
+              <input
+                type="number"
+                name="txtKMs"
+                id="txtKMs"
+                placeholder="KMs"
+                class="number"
+                
+              />
+              <small></small>
+            </div>
+            <div>
+              <img src="./assets/potencia.png" alt="potencia" />
+              <input
+                type="number"
+                name="txtPotencia"
+                id="txtPotencia"
+                placeholder="Potencia"
+                class="number"
+                
+              />
               <small></small>
             </div>
           </fieldset>
-          <small id="mensaje-form"></small>
-          <button  value="Guardar" id="btnGuardar">Guardar</button>
-          <button  value="modificar" id="btnModificar" disabled> Modificar</button>
-          <button  value="eliminar" id="btnEliminar" disabled> Eliminar </button>
+          <small id="mensaje-form">
+
+           
+          </small>
+            <div id="spinner-container">
+            </div>
           
+          <div>
+
+            <button value="Guardar" id="btnGuardar">
+              <img src="./assets/save.svg" alt="" srcset="">
+              Guardar</button>
+              <button value="modificar" id="btnModificar" class="notVisible">
+                Modificar
+              </button>
+              <button value="eliminar" id="btnEliminar" class="notVisible">
+                Eliminar
+              </button>
+            </div>
         </form>
       </fieldset>
     </div>
-    
-    
-    <div id="spinner-container">
-      <img src="./assets/rueda.png" alt="rueda-spinner" id="spinner" class="rotate notVisible"/>
 
-    </div>
-    <div id="divTabla" >
+ 
 
 
-    </div>
+    <div id="divTabla"></div>
 
     <footer>
       <nav>
